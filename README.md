@@ -8,6 +8,8 @@ Simple macOS notifier that displays random vocabulary cards from a TSV export (e
 - Python 3
 - pandas (`pip install pandas`)
 
+**Optional (character as large image in notification):** [Pillow](https://pypi.org/project/Pillow/) and [terminal-notifier](https://github.com/julienXX/terminal-notifier) (`brew install terminal-notifier`). If both are available, the notification shows the character as a 128×128 image next to the text so it appears larger.
+
 ## Data format
 
 The script reads `quizlet_export.tsv` in the same folder. It expects **two tab-separated columns** without a header:
@@ -27,6 +29,8 @@ Example:
 
 - **Title:** the character only (e.g. `贝`)
 - **Message (below):** pinyin and translation (e.g. `bèi - coquillage (部 est)`)
+
+If Pillow and terminal-notifier are installed, the character is also shown as a **large image** (logo) in the notification.
 
 ## Usage
 
