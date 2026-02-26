@@ -8,7 +8,7 @@ SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 TSV_PATH = os.path.join(SCRIPT_DIR, "quizlet_export.tsv")
 
 # Interval between notifications (in seconds)
-NOTIFICATION_INTERVAL = 440
+NOTIFICATION_INTERVAL = 60
 
 
 def load_cards():
@@ -29,9 +29,9 @@ def send_notification(pronounce: bool = False):
     # Title = character only; message = pinyin and translation below
     title = char
     message = pinyin_meaning
-    # Escape quotes for AppleScript
-    message_esc = message.replace("\\", "\\\\").replace('"', '\\"')
-    title_esc = title.replace("\\", "\\\\").replace('"', '\\"')
+    # Escape for shell: backslash, double quote, and single quote (e.g. "l'achevé")
+    message_esc = message.replace("\\", "\\\\").replace('"', '\\"').replace("'", "'\\''")
+    title_esc = title.replace("\\", "\\\\").replace('"', '\\"').replace("'", "'\\''")
     os.system(
         f'osascript -e \'display notification "{message_esc}" with title "{title_esc}"\''
     )
