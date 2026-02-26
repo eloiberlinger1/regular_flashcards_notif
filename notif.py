@@ -1,5 +1,8 @@
 import os
+import shlex
 import subprocess
+import sys
+import tempfile
 import time
 from typing import Optional
 
@@ -99,8 +102,19 @@ def send_notification(pronounce: bool = False, verbose: bool = False):
         msg_arg = message_clean
         if msg_arg and msg_arg[0] in ("[", "("):
             msg_arg = "\\" + msg_arg
+        # On click: run helper that POSTs to the dictionary (GET search_query doesn't work on the site)
+        helper_script = os.path.join(SCRIPT_DIR, "open_dict_post.py")
+        fd, char_file = tempfile.mkstemp(prefix="notif_char_", suffix=".txt")
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as f:
+                f.write(char)
+        except Exception:
+            os.close(fd)
+            os.unlink(char_file)
+            raise
+        execute_cmd = " ".join(shlex.quote(p) for p in [sys.executable, helper_script, char_file])
         r = subprocess.run(
-            [tn_path, "-title", title_clean, "-message", msg_arg] + content_image_arg,
+            [tn_path, "-ignoreDnD", "-execute", execute_cmd, "-title", title_clean, "-message", msg_arg] + content_image_arg,
             capture_output=True,
             text=True,
         )
