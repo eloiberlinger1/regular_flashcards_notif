@@ -1,5 +1,7 @@
 # regular_vocab_notif
 
+![Demo notification](https://filedn.eu/lqAABNUSgVkfRyevTm4sSpR/NEVER_DELETE_ALWAYS_ADD/Screenshot%202026-02-26%20at%2016.44.05.png)
+
 Simple macOS notifier that displays random vocabulary cards from a TSV export (e.g. Quizlet). Notifications show the character with pinyin and translation below; optional pronunciation with the Tingting voice.
 
 ## Requirements
